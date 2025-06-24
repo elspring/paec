@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reciclaje Escolar</title>
+</head>
+<body>
+  <h1>Gestión de Reciclaje</h1>
+
+  <h2>Agregar Material</h2>
+  <form id="formMaterial">
+    <input type="text" placeholder="Nombre" name="nombre" required>
+    <input type="text" placeholder="Descripción" name="descripcion">
+    <input type="number" placeholder="Cantidad (kg)" name="cantidadKg">
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Materiales Registrados</h2>
+  <ul id="listaMateriales"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>
