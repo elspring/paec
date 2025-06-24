@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Puntos de Recolección</title>
+</head>
+<body>
+  <h1>Agregar Punto de Recolección</h1>
+  <form id="formReco">
+    <input type="text" name="ubicacion" placeholder="Ubicación" required><br>
+    <input type="text" name="tipoMateriales" placeholder="Materiales (separados por coma)" required><br>
+    <input type="text" name="responsable" placeholder="Responsable" required><br>
+    <button type="submit">Guardar Punto</button>
+  </form>
+
+  <br><br>
+  <a href="menu.html">⬅️ Volver al menú</a>
+
+  <script>
+    const form = document.getElementById('formReco');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const datos = Object.fromEntries(new FormData(form).entries());
+      datos.tipoMateriales = datos.tipoMateriales.split(',').map(e => e.trim());
+
+      await fetch('https://paec-mxd6.onrender.com/recoleccion', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(datos)
+      });
+
+      alert("Punto guardado");
+      form.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizar y Actualizar</title>
+</head>
+<body>
+  <h1>Materiales Registrados</h1>
+  <ul id="listaMateriales"></ul>
+
+  <br><br>
+  <a href="menu.html">⬅️ Volver al menú</a>
+
+  <script>
+    const lista = document.getElementById('listaMateriales');
+    const API = 'https://paec-mxd6.onrender.com/materiales';
+
+    async function cargarMateriales() {
+      lista.innerHTML = '';
+      const res = await fetch(API);
+      const datos = await res.json();
+
+      datos.forEach(m => {
+        const item = document.createElement('li');
+        item.innerHTML = `
+          <b>${m.nombre}</b> - ${m.descripcion} (${m.cantidadKg} kg)
+          <button onclick="editar('${m._id}')">Editar</button>
+        `;
+        lista.appendChild(item);
+      });
+    }
+
+    async function editar(id) {
+      const nuevoNombre = prompt("Nuevo nombre:");
+      const nuevaDesc = prompt("Nueva descripción:");
+      const nuevaCant = prompt("Nueva cantidad en kg:");
+
+      await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ nombre: nuevoNombre, descripcion: nuevaDesc, cantidadKg: parseFloat(nuevaCant) })
+      });
+
+      cargarMateriales();
+    }
+
+    cargarMateriales();
+  </script>
+</body>
+</html>
